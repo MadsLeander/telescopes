@@ -135,6 +135,3 @@ Config.Telescopes = {
 	[60] = { model = -656927072, coords = vector3(-612.4269, 39.68902, 97.1973) },
 	[61] = { model = -656927072, coords = vector3(-575.95, 48.04946, 91.83607) },
 }
-
-
--- sometimes you can "flick" your way out of the restricted view range.
