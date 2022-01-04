@@ -113,10 +113,22 @@ local function CreateTelescopeCamera(entity, data)
 
     SetExtraTimecycleModifier("telescope")
 
-    scaleform = RequestScaleformMovie("binoculars")
+    scaleform = RequestScaleformMovie("OBSERVATORY_SCOPE")
     while not HasScaleformMovieLoaded(scaleform) do
         Citizen.Wait(10)
     end
+    local xres,yres = GetActiveScreenResolution()
+    BeginScaleformMovieMethod(scaleform, "SET_DISPLAY_CONFIG")
+    ScaleformMovieMethodAddParamInt(xres)
+    ScaleformMovieMethodAddParamInt(yres)
+    ScaleformMovieMethodAddParamInt(5) --_safeTopPercent
+    ScaleformMovieMethodAddParamInt(5) --_safeBottomPercent
+    ScaleformMovieMethodAddParamInt(5) --_safeLeftPercent
+    ScaleformMovieMethodAddParamInt(5) --_safeRightPercent
+    ScaleformMovieMethodAddParamBool(GetIsWidescreen())
+    ScaleformMovieMethodAddParamBool(GetIsHidef())
+    ScaleformMovieMethodAddParamBool(false) --isAsian
+    EndScaleformMovieMethod()
 
     RenderScriptCams(camera, 0, 0, false, false)
 end
@@ -231,15 +243,16 @@ local function HandleMovement(maxVertical)
 end
 
 local function RenderTelescopeLense()
-    DrawScaleformMovie(scaleform, 0.69, 0.5, 1.0, 1.0, 255, 255, 255, 255)
-    DrawScaleformMovie(scaleform, 0.31, 0.5, 1.0, 1.0, 255, 255, 255, 255)
+    --DrawScaleformMovie(scaleform, 0.69, 0.5, 1.0, 1.0, 255, 255, 255, 255)
+    --DrawScaleformMovie(scaleform, 0.31, 0.5, 1.0, 1.0, 255, 255, 255, 255)
 
-    DrawRect(0.10, 0.5, 0.2, 1.0, 0, 0, 0, 255) -- Left side
-    DrawRect(0.90, 0.5, 0.2, 1.0, 0, 0, 0, 255) -- Right side
+    --DrawRect(0.10, 0.5, 0.2, 1.0, 0, 0, 0, 255) -- Left side
+    --DrawRect(0.90, 0.5, 0.2, 1.0, 0, 0, 0, 255) -- Right side
+    DrawScaleformMovieFullscreen(scaleform, 255, 255,255,255,0)
 end
 
 local function RenderBinocularLense()
-    DrawScaleformMovie(scaleform, 0.5, 0.5, 1.0, 1.0, 255, 255, 255, 255)
+    --DrawScaleformMovie(scaleform, 0.5, 0.5, 1.0, 1.0, 255, 255, 255, 255)
 end
 
 local function GetClosestTelescope()
