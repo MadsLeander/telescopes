@@ -1,6 +1,5 @@
 # Telescopes
 Telescopes is a free standalone script that allows players to use telescopes all around the map. Currently, it allows the player to use /telescope, press E when close to one or to use either qTarget or qb-target as a 3rd eye solution.
-Since I was unable to find a telescope scaleform in the game I had to do some trickery with overlaying the two binocular scaleforms and some DrawRect() functions to make the illusion of a telescope lens. This might lead to some odd behaviour with ultra-wide screens.
 I decided to release this to the public since I haven’t seen any other telescope scripts around. The script was made for fun, so the code might not be the greatest, feel free to improve upon it.
 
 
