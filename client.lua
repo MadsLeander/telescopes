@@ -113,7 +113,7 @@ local function CreateTelescopeCamera(entity, data)
 
     SetExtraTimecycleModifier("telescope")
 
-    scaleform = RequestScaleformMovie("OBSERVATORY_SCOPE")
+    scaleform = RequestScaleformMovie(data.scaleform)
     while not HasScaleformMovieLoaded(scaleform) do
         Citizen.Wait(10)
     end
@@ -242,19 +242,6 @@ local function HandleMovement(maxVertical)
 	end
 end
 
-local function RenderTelescopeLense()
-    --DrawScaleformMovie(scaleform, 0.69, 0.5, 1.0, 1.0, 255, 255, 255, 255)
-    --DrawScaleformMovie(scaleform, 0.31, 0.5, 1.0, 1.0, 255, 255, 255, 255)
-
-    --DrawRect(0.10, 0.5, 0.2, 1.0, 0, 0, 0, 255) -- Left side
-    --DrawRect(0.90, 0.5, 0.2, 1.0, 0, 0, 0, 255) -- Right side
-    DrawScaleformMovieFullscreen(scaleform, 255, 255,255,255,0)
-end
-
-local function RenderBinocularLense()
-    --DrawScaleformMovie(scaleform, 0.5, 0.5, 1.0, 1.0, 255, 255, 255, 255)
-end
-
 local function GetClosestTelescope()
     local closest = 0
     local closestDist = Config.MaxDetectionDist
@@ -375,12 +362,8 @@ local function UseTelescope(entity)
             tick = 0
         end
 
-        -- Draw the scaleform(s)
-        if data.binoculars then
-            RenderBinocularLense()
-        else
-            RenderTelescopeLense()
-        end
+        -- Draw the scaleform
+        DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255, 0)
 
         -- Draw instructions
         DrawScaleformMovieFullscreen(instScaleform, 255, 255, 255, 255, 0)
@@ -394,11 +377,7 @@ local function UseTelescope(entity)
 
     DoScreenFadeOut(500)
     while not IsScreenFadedOut() do
-        if data.binoculars then
-            RenderBinocularLense()
-        else
-            RenderTelescopeLense()
-        end
+        DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255, 0)
         Citizen.Wait(0)
     end
     Citizen.Wait(150)
