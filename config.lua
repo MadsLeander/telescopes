@@ -13,6 +13,7 @@ Config.Targeting = {
 Config.HelpText = "Press ~INPUT_TALK~ to look through the telescope"
 Config.NoFoundMessage = "No telescope was found!"
 Config.TelescopeInUse = "Someone else is already using the telescope!"
+Config.ToFarAway = "You went to far away!"
 
 -- Other
 Config.UseDistanceThread = true

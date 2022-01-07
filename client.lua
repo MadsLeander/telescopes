@@ -266,57 +266,45 @@ local function UseTelescope(entity)
     local playerPed = GetPlayerPed(-1)
     local data = Config.Models[GetEntityModel(entity)]
     local offsetCoords = GetOffsetFromEntityInWorldCoords(entity, data.offset)
-    local prevDist = #(GetEntityCoords(playerPed)-offsetCoords)
-    local ticks = 0
+    local animation = Config.Animations[data.animation]
+    inTelescope = true
 
     if not IsTelescopeAvailable(offsetCoords) then
         DisplayNotification(Config.TelescopeInUse)
         return
     end
 
-    inTelescope = true
-    TaskGotoEntityOffsetXy(playerPed, entity, 5000, data.offset, 1.0, true)
-
-    while true do
-        local dist = #(GetEntityCoords(playerPed)-offsetCoords)
-        if dist < 0.5 then
-            break
-        elseif GetDifference(dist, prevDist) < 0.06 then
-            break
-        elseif dist > 8.0 or ticks > 12 then
-            inTelescope = false
-            return
-        end
-
-        prevDist = dist
-        ticks = ticks + 1
-        Citizen.Wait(250)
-    end
-
-    ClearPedTasks(playerPed)
     local heading = GetEntityHeading(entity)
     if data.headingOffset then 
         heading = heading + data.headingOffset
         if heading > 360.0 then heading = heading - 360.0 end
     end
 
-    local difference = GetDifference(heading, GetEntityHeading(playerPed))
-    if difference > 10.0 then
-        TaskAchieveHeading(playerPed, heading, 1250)
-        Citizen.Wait(1250)
+    TaskGoStraightToCoord(playerPed, offsetCoords, 1, 8000, heading, 0.05)
 
-        difference = GetDifference(heading, GetEntityHeading(playerPed))
-        if difference > 10.0 then
-            SetEntityHeading(playerPed, heading)
+    while true do
+        Citizen.Wait(500)
+        local taskStatus = GetScriptTaskStatus(playerPed, 0x7D8F4411) 
+        if taskStatus == 0 or taskStatus == 7 then
+            break
         end
     end
 
-    local dist = #(GetEntityCoords(playerPed)-offsetCoords)
-    if dist > 0.3 then
-        SetEntityCoords(playerPed, vector3(offsetCoords.x, offsetCoords.y, offsetCoords.z-1.0))
+    ClearPedTasks(playerPed)
+    local difference = GetDifference(heading, GetEntityHeading(playerPed))
+    if difference > 10.0 then
+        SetEntityHeading(playerPed, heading)
     end
 
-    local animation = Config.Animations[data.animation]
+    local dist = #(GetEntityCoords(playerPed)-offsetCoords)
+    if dist > 0.3 and dist < 2.5 then
+        SetEntityCoords(playerPed, vector3(offsetCoords.x, offsetCoords.y, offsetCoords.z-1.0))
+    elseif dist > 2.5 then
+        DisplayNotification(Config.ToFarAway)
+        ClearPedTasks(playerPed)
+        return
+    end
+
     LoadAnimDict("mini@telescope")
     TaskPlayAnim(playerPed, "mini@telescope", animation.enter, 2.0, 2.0, -1, 2, 0, false, false, false)
 
