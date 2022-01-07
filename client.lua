@@ -65,7 +65,6 @@ local function SetupInstructions()
     PopScaleformMovieFunctionVoid()
 end
 
-
 local function LoadAnimDict(dict)
 	RequestAnimDict(dict)
 	while not HasAnimDictLoaded(dict) do
@@ -209,10 +208,10 @@ local function IsTelescopeAvailable(coords)
 end
 
 local function HandleZoom()
-	if GetDisabledControlNormal(0, 32) ~= 0.0 or GetDisabledControlNormal(0, 335) ~= 0.0 then
+	if GetDisabledControlNormal(0, 32) ~= 0.0 or GetDisabledControlNormal(0, 335) ~= 0.0 then -- Zoom in
         fov = math.max(fov - Config.Zoom.Speed, Config.Zoom.Min)
     end
-    if GetDisabledControlNormal(0, 33) ~= 0.0 or GetDisabledControlNormal(0, 336) ~= 0.0 then
+    if GetDisabledControlNormal(0, 33) ~= 0.0 or GetDisabledControlNormal(0, 336) ~= 0.0 then -- Zoom out
         fov = math.min(fov + Config.Zoom.Speed, Config.Zoom.Max)
     end
     local current_fov = GetCamFov(camera)
@@ -486,4 +485,3 @@ RegisterCommand("telescope", function(source, args, rawCommand)
         DisplayNotification(Config.NoFoundMessage)
     end
 end, false)
-
