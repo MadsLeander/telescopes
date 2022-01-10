@@ -22,7 +22,11 @@ Config.UseNativeNotifiactions = false -- will use custom (mythic notify by defau
 Config.MaxInteractionDist = 1.5
 Config.MaxDetectionDist = 6.0
 
-Config.MovementSpeed = 3.0
+Config.MovementSpeed = {
+	Keyboard = 2.75,
+	Controller = 1.0
+}
+
 Config.Zoom = {
 	Max = 50.0,
 	Min = 5.0,

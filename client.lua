@@ -229,12 +229,13 @@ local function HandleMovement(maxVertical)
         local zoomValue = (1.0/(Config.Zoom.Max-Config.Zoom.Min))*(fov-Config.Zoom.Min)
         local rotation = GetCamRot(camera, 2)
         local heading = RotationToHeading(rotation.z)
-
-        local newX = math.max(math.min(maxVertical, rotation.x + rightAxisY*-1.0*(Config.MovementSpeed)*(zoomValue+0.1)), maxVertical*-1)
+        
+        local movementSpeed = (IsUsingKeyboard(1) and Config.MovementSpeed.Keyboard) or Config.MovementSpeed.Controller
+        local newX = math.max(math.min(maxVertical, rotation.x + rightAxisY*-1.0*(movementSpeed)*(zoomValue+0.1)), maxVertical*-1)
         local newZ = rotation.z
 
         if not (heading > maxLeft and rightAxisX < 0.0) and not (heading < maxRight and rightAxisX > 0.0) then
-            newZ = rotation.z + rightAxisX*-1.0*(Config.MovementSpeed)*(zoomValue+0.1)
+            newZ = rotation.z + rightAxisX*-1.0*(movementSpeed)*(zoomValue+0.1)
         end
 
 		SetCamRot(camera, newX, 0.0, newZ, 2)
@@ -283,7 +284,7 @@ local function UseTelescope(entity)
 
     while true do
         Citizen.Wait(500)
-        local taskStatus = GetScriptTaskStatus(playerPed, 0x7D8F4411) 
+        local taskStatus = GetScriptTaskStatus(playerPed, "SCRIPT_TASK_GO_STRAIGHT_TO_COORD") 
         if taskStatus == 0 or taskStatus == 7 then
             break
         end
