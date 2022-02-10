@@ -104,6 +104,10 @@ Config.Telescopes = {
 	{ model = 844159446, coords = vector3(499.8335, 5602.674, 796.9147) },
 	{ model = 844159446, coords = vector3(503.3787, 5602.383, 796.9147) },
 
+	-- Chumash
+	{ model = 844159446, coords = vector3(-3259.545, 982.4403, 11.59678) }, -- Both are at the base of the pair
+	{ model = 844159446, coords = vector3(-3259.456, 987.225, 11.59678) },
+
 	-- Domestics --
 	-- Houses/Apartment
 	{ model = -656927072, coords = vector3(13.73517, 528.4813, 174.2378) }, -- Franklin
