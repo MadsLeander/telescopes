@@ -99,6 +99,9 @@ Config.Telescopes = {
 	{ model = 1186047406, coords = vector3(-1841.719, -1257.338, 8.5031) },
 	{ model = 1186047406, coords = vector3(-1857.081, -1244.448, 8.50415) },
 
+	-- Hill Valley Church (West Eclipse Boulevard)
+	{ model = 1186047406, coords = vector3(-1810.320, -129.073, 78.66142) },
+
 	-- Public Binocular --
 	-- Mount Chilliad
 	{ model = 844159446, coords = vector3(499.8335, 5602.674, 796.9147) },
