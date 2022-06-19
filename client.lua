@@ -48,7 +48,7 @@ local function SetupInstructions()
 
     PushScaleformMovieFunction(instScaleform, "SET_DATA_SLOT")
     PushScaleformMovieFunctionParameterInt(0)
-    ScaleformMovieMethodAddParamPlayerNameString("~INPUT_TALK~")
+    ScaleformMovieMethodAddParamPlayerNameString("~INPUT_PICKUP~")
     BeginTextCommandScaleformString("STRING")
 	AddTextComponentSubstringPlayerName(Config.Localization.Exit)
 	EndTextCommandScaleformString(0, 0, 1, -1)
@@ -337,7 +337,7 @@ local function UseTelescope(entity)
         HandleZoom()
         HandleMovement(data.MaxVertical)
 
-        if IsControlJustPressed(0, 46) then
+        if IsControlJustPressed(0, 38) then
             break
         end
 
@@ -439,8 +439,8 @@ if Config.UseDistanceThread then
                 if closest ~= 0 then
                     if distance < Config.MaxInteractionDist then
                         sleep = 0
-                        if IsControlJustPressed(0, 46) then
                         DisplayHelpText(Config.Localization.HelpText)
+                        if IsControlJustPressed(0, 38) then
                             local telescope = GetClosestTelescope()
                             if telescope ~= 0 then
                                 UseTelescope(telescope)
