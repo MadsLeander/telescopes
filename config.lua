@@ -1,9 +1,12 @@
 Config = {}
 
--- Targeting
-Config.UseQTarget = false
-Config.UseQBTarget = false
+-- The targeting solution (3rd eye) to use.
+-- false       = don't use any targeting solution. 
+-- 'qb-target' = qb-target by BerkieBb and its many other contributors. (https://github.com/BerkieBb/qb-target)
+-- 'qtarget'   = qTarget by Linden (thelindat), Noms (OfficialNoms) and its many other contributors. (https://github.com/overextended/qtarget)
+Config.Target = false
 
+-- Targeting
 Config.Targeting = {
 	Icon = "fas fa-binoculars",
 	Label = "Use Telescope"

@@ -395,7 +395,7 @@ end
 
 
 -- Targeting --
-if Config.UseQTarget or Config.UseQBTarget then
+if Config.Target then
     local models = {}
     local index = 0
     for model, data in pairs(Config.Models) do
@@ -403,33 +403,18 @@ if Config.UseQTarget or Config.UseQBTarget then
         models[index] = model
     end
 
-    if Config.UseQTarget then
-        exports.qtarget:AddTargetModel(models, {
-            options = {
-                {
-                    icon = Config.Targeting.Icon,
-                    label = Config.Targeting.Label,
-                    action = function(entity)
-                        UseTelescope(entity)
-                    end
-                },
+    exports[Config.Target]:AddTargetModel(models, {
+        options = {
+            {
+                icon = Config.Targeting.Icon,
+                label = Config.Targeting.Label,
+                action = function(entity)
+                    UseTelescope(entity)
+                end
             },
-            distance = Config.MaxInteractionDist
-        })
-    elseif Config.UseQBTarget then
-        exports['qb-target']:AddTargetModel(models, {
-            options = {
-                {
-                    icon = Config.Targeting.Icon,
-                    label = Config.Targeting.Label,
-                    action = function(entity)
-                        UseTelescope(entity)
-                    end
-                }
-            },
-            distance = Config.MaxInteractionDist,
-        })
-    end
+        },
+        distance = Config.MaxInteractionDist
+    })
 end
 
 
