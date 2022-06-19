@@ -1,14 +1,16 @@
 -- Variables --
 local inTelescope = false
 local gameplayCamera = {}
+local telescopeHeading = 0.0
 
 local camera = nil
 local scaleform = nil
 local instScaleform = nil
-local fov = Config.Zoom.Max
 
-local maxLeft = 0
-local maxRight = 0
+local fov = Config.Zoom.Max
+local relativeOffset = 0.0
+local maxVertical = 20.0
+local maxHorizontal = 55.0
 
 -- Functions --
 local function DisplayNativeNotification(msg)
@@ -221,22 +223,24 @@ local function HandleZoom()
     SetCamFov(camera, current_fov + (fov - current_fov)*0.05)
 end
 
-local function HandleMovement(maxVertical)
-    local rightAxisX = GetDisabledControlNormal(0, 220)
-	local rightAxisY = GetDisabledControlNormal(0, 221)
+local function HandleMovementInput()
+    local axisX = GetDisabledControlNormal(0, 220)
+	local axisY = GetDisabledControlNormal(0, 221)
 
-	if rightAxisX ~= 0.0 or rightAxisY ~= 0.0 then
+	if axisX ~= 0.0 or axisY ~= 0.0 then
         local zoomValue = (1.0/(Config.Zoom.Max-Config.Zoom.Min))*(fov-Config.Zoom.Min)
         local rotation = GetCamRot(camera, 2)
-        local heading = RotationToHeading(rotation.z)
-        
-        local movementSpeed = (IsUsingKeyboard(1) and Config.MovementSpeed.Keyboard) or Config.MovementSpeed.Controller
-        local newX = math.max(math.min(maxVertical, rotation.x + rightAxisY*-1.0*(movementSpeed)*(zoomValue+0.1)), maxVertical*-1)
-        local newZ = rotation.z
 
-        if not (heading > maxLeft and rightAxisX < 0.0) and not (heading < maxRight and rightAxisX > 0.0) then
-            newZ = rotation.z + rightAxisX*-1.0*(movementSpeed)*(zoomValue+0.1)
+        local movementSpeed = (IsUsingKeyboard(1) and Config.MovementSpeed.Keyboard) or Config.MovementSpeed.Controller
+        relativeOffset = relativeOffset + axisX*-1.0*(movementSpeed)*(zoomValue+0.1)
+        if relativeOffset > maxHorizontal then
+            relativeOffset = maxHorizontal
+        elseif relativeOffset < maxHorizontal*-1 then
+            relativeOffset = maxHorizontal*-1
         end
+
+        local newX = math.max(math.min(maxVertical, rotation.x + axisY*-1.0*(movementSpeed)*(zoomValue+0.1)), maxVertical*-1)
+        local newZ = telescopeHeading + relativeOffset
 
 		SetCamRot(camera, newX, 0.0, newZ, 2)
 	end
@@ -325,17 +329,15 @@ local function UseTelescope(entity)
     local tick = 0
     local doAnim = true
     fov = Config.Zoom.Max
-
-    maxLeft = heading+data.MaxHorizontal
-    if maxLeft > 360.0 then maxLeft = maxLeft - 360.0 end
-
-    maxRight = heading-data.MaxHorizontal
-    if maxRight < 0.0 then maxRight = maxRight + 360.0 end
+    maxVertical = data.MaxVertical
+    maxHorizontal = data.MaxHorizontal
+    telescopeHeading = heading
+    relativeOffset = 0.0
 
     while true do
         -- Handle the movement and button inputs every frame
         HandleZoom()
-        HandleMovement(data.MaxVertical)
+        HandleMovementInput()
 
         if IsControlJustPressed(0, 38) then
             break
