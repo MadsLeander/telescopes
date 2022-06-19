@@ -50,7 +50,7 @@ local function SetupInstructions()
     PushScaleformMovieFunctionParameterInt(0)
     ScaleformMovieMethodAddParamPlayerNameString("~INPUT_TALK~")
     BeginTextCommandScaleformString("STRING")
-	AddTextComponentSubstringPlayerName("Exit Telescope")
+	AddTextComponentSubstringPlayerName(Config.Localization.Exit)
 	EndTextCommandScaleformString(0, 0, 1, -1)
     PopScaleformMovieFunctionVoid()
 
@@ -270,7 +270,7 @@ local function UseTelescope(entity)
     inTelescope = true
 
     if not IsTelescopeAvailable(offsetCoords) then
-        DisplayNotification(Config.TelescopeInUse)
+        DisplayNotification(Config.Localization.TelescopeInUse)
         return
     end
 
@@ -300,7 +300,7 @@ local function UseTelescope(entity)
     if dist > 0.3 and dist < 2.5 then
         SetEntityCoords(playerPed, vector3(offsetCoords.x, offsetCoords.y, offsetCoords.z-1.0))
     elseif dist > 2.5 then
-        DisplayNotification(Config.ToFarAway)
+        DisplayNotification(Config.Localization.ToFarAway)
         ClearPedTasks(playerPed)
         return
     end
@@ -439,13 +439,13 @@ if Config.UseDistanceThread then
                 if closest ~= 0 then
                     if distance < Config.MaxInteractionDist then
                         sleep = 0
-                        DisplayHelpText(Config.HelpText)
                         if IsControlJustPressed(0, 46) then
+                        DisplayHelpText(Config.Localization.HelpText)
                             local telescope = GetClosestTelescope()
                             if telescope ~= 0 then
                                 UseTelescope(telescope)
                             else
-                                DisplayNotification(Config.NoFoundMessage)
+                                DisplayNotification(Config.Localization.NonFound)
                             end
                         end
                     else
@@ -468,6 +468,6 @@ RegisterCommand("telescope", function(source, args, rawCommand)
     if telescope ~= 0 then
         UseTelescope(telescope)
     else
-        DisplayNotification(Config.NoFoundMessage)
+        DisplayNotification(Config.Localization.NonFound)
     end
 end, false)

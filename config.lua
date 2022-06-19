@@ -12,11 +12,14 @@ Config.Targeting = {
 	Label = "Use Telescope"
 }
 
--- Text
-Config.HelpText = "Press ~INPUT_TALK~ to look through the telescope"
-Config.NoFoundMessage = "No telescope was found!"
-Config.TelescopeInUse = "Someone else is already using the telescope!"
-Config.ToFarAway = "You went to far away!"
+-- Localization
+Config.Localization = {
+	HelpText = "Press ~INPUT_PICKUP~ to look through the telescope",
+	NonFound = "No telescope was found!",
+	TelescopeInUse = "Someone else is already using the telescope!",
+	ToFarAway = "You went to far away!",
+	Exit = "Exit Telescope"
+}
 
 -- Other
 Config.UseDistanceThread = true
