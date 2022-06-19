@@ -14,4 +14,4 @@ It runs at 0.4- 0.5ms when using a telescope.
 
 
 # Known Issues
-You can sometimes “flick” your way out of the restricted view angles on the two telescopes in the Senora National Park. This is not a big issue, but I might as well mention it.
+None :D
