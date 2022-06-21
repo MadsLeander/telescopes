@@ -118,6 +118,10 @@ Config.Telescopes = {
 	{ model = 844159446, coords = vector3(-3259.456, 987.225, 11.59678) },
 
 	-- Domestics --
+	-- Route 68/Harmony
+	{ model = -656927072, coords = vector3(930.242, 2858.837, 59.8827) },
+	{ model = -656927072, coords = vector3(930.703, 2869.554, 60.5036) },
+
 	-- Houses/Apartment
 	{ model = -656927072, coords = vector3(13.73517, 528.4813, 174.2378) }, -- Franklin
 	{ model = -656927072, coords = vector3(-667.9016, 845.2842, 224.6442) }, -- 6085 Milton Road
@@ -154,6 +158,11 @@ Config.Telescopes = {
 	{ model = -656927072, coords = vector3(-625.4163, 59.26805, 106.237) },
 	{ model = -656927072, coords = vector3(-612.4269, 39.68902, 97.1973) },
 	{ model = -656927072, coords = vector3(-575.95, 48.04946, 91.83607) },
+	{ model = -656927072, coords = vector3(-803.17, 334.2904, 205.8309) },
+	{ model = -656927072, coords = vector3(-775.646, 342.9091, 210.9943) },
+	{ model = -656927072, coords = vector3(-789.0805, 343.0732, 186.7107) },
+	{ model = -656927072, coords = vector3(-803.63, 343.6826, 158.2115) },
+	{ model = -656927072, coords = vector3(-752.8467, 322.9657, 175.0137) },
 
 	-- DLC: Los Santos The Contract
 	{ model = -656927072, coords = vector3(-1017.182, -436.4265, 67.2585) },
