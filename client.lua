@@ -310,7 +310,7 @@ local function UseTelescope(entity)
     TaskGoStraightToCoord(playerPed, offsetCoords, 1, 8000, heading, 0.05)
 
     while true do
-        Citizen.Wait(500)
+        Citizen.Wait(250)
         local taskStatus = GetScriptTaskStatus(playerPed, "SCRIPT_TASK_GO_STRAIGHT_TO_COORD") 
         if taskStatus == 0 or taskStatus == 7 then
             break
@@ -324,9 +324,9 @@ local function UseTelescope(entity)
     end
 
     local dist = #(GetEntityCoords(playerPed)-offsetCoords)
-    if dist > 0.3 and dist < 2.5 then
+    if dist > 0.425 and dist < 2.0 then
         SetEntityCoords(playerPed, vector3(offsetCoords.x, offsetCoords.y, offsetCoords.z-1.0))
-    elseif dist > 2.5 then
+    elseif dist > 2.0 then
         DisplayNotification(Config.Localization.ToFarAway)
         ClearPedTasks(playerPed)
         return
@@ -369,7 +369,7 @@ local function UseTelescope(entity)
 
         -- Only handle "less important" stuff every 100 frames
         if tick >= 100 then
-            if #(GetEntityCoords(playerPed)-offsetCoords) > 2.0 or IsEntityDead(playerPed) then
+            if #(GetEntityCoords(playerPed)-offsetCoords) > 1.5 or IsEntityDead(playerPed) then
                 doAnim = false
                 break
             end
