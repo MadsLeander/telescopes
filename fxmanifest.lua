@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'Mads'
 description 'Telescopes'
-version '1.3.0'
+version '1.3.1'
 
 client_scripts {
 	'config.lua',
