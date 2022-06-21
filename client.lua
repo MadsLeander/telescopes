@@ -2,6 +2,7 @@
 local inTelescope = false
 local gameplayCamera = {}
 local telescopeHeading = 0.0
+local frozen = false
 
 local camera = nil
 local scaleform = nil
@@ -266,6 +267,28 @@ local function GetClosestTelescope()
     return closest
 end
 
+local function RequestControlIfNetworked()
+    if NetworkGetEntityIsNetworked(entity) then
+        NetworkRequestControlOfEntity(entity)
+    end
+end
+
+local function FreezeTelescope(entity)
+	if not IsEntityPositionFrozen(entity) then
+		RequestControlIfNetworked()
+		FreezeEntityPosition(entity, true)
+		frozen = true
+	end
+end
+
+local function UnfreezeTelescope(entity)
+	if frozen then
+        RequestControlIfNetworked()
+		FreezeEntityPosition(entity, false)
+		frozen = false
+	end
+end
+
 local function UseTelescope(entity)
     local playerPed = GetPlayerPed(-1)
     local data = Config.Models[GetEntityModel(entity)]
@@ -309,6 +332,7 @@ local function UseTelescope(entity)
         return
     end
 
+    FreezeTelescope(entity)
     LoadAnimDict("mini@telescope")
     TaskPlayAnim(playerPed, "mini@telescope", animation.enter, 2.0, 2.0, -1, 2, 0, false, false, false)
 
@@ -392,6 +416,7 @@ local function UseTelescope(entity)
         ClearPedTasks(playerPed)
     end
     inTelescope = false
+    UnfreezeTelescope(entity)
     RemoveAnimDict("mini@telescope")
 end
 
