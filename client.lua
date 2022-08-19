@@ -199,7 +199,7 @@ local function IsPedPlayingAnyTelescopeAnim(ped)
 end
 
 local function IsTelescopeAvailable(coords)
-	local playerPed = GetPlayerPed(-1)
+	local playerPed = PlayerPedId()
     for ped in EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed) do
         if #(GetEntityCoords(ped)-coords) < 1.0 and ped ~= playerPed then
             if IsPedPlayingAnyTelescopeAnim(ped) then
@@ -250,7 +250,7 @@ end
 local function GetClosestTelescope()
     local closest = 0
     local closestDist = Config.MaxDetectionDist
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
 
     for model, data in pairs(Config.Models) do
         local entity = GetClosestObjectOfType(coords.x, coords.y, coords.z, Config.MaxDetectionDist, model, false, false, false)
@@ -290,7 +290,7 @@ local function UnfreezeTelescope(entity)
 end
 
 local function UseTelescope(entity)
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
     local data = Config.Models[GetEntityModel(entity)]
     local offsetCoords = GetOffsetFromEntityInWorldCoords(entity, data.offset)
     local animation = Config.Animations[data.animation]
@@ -450,7 +450,7 @@ if Config.UseDistanceThread then
     Citizen.CreateThread(function()
         while true do
             local sleep = 500
-            local coords = GetEntityCoords(GetPlayerPed(-1))
+            local coords = GetEntityCoords(PlayerPedId())
             local closest = 0
             local distance = 1000
 
