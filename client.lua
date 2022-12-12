@@ -101,10 +101,10 @@ local function CreateTelescopeCamera(entity, data)
     while not HasScaleformMovieLoaded(scaleform) do
         Citizen.Wait(10)
     end
-    local xres,yres = GetActiveScreenResolution()
+    local xRes, yRes = GetActiveScreenResolution()
     BeginScaleformMovieMethod(scaleform, "SET_DISPLAY_CONFIG")
-    ScaleformMovieMethodAddParamInt(xres)
-    ScaleformMovieMethodAddParamInt(yres)
+    ScaleformMovieMethodAddParamInt(xRes)
+    ScaleformMovieMethodAddParamInt(yRes)
     ScaleformMovieMethodAddParamInt(5) --_safeTopPercent
     ScaleformMovieMethodAddParamInt(5) --_safeBottomPercent
     ScaleformMovieMethodAddParamInt(5) --_safeLeftPercent
