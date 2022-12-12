@@ -245,7 +245,7 @@ local function GetClosestTelescope()
     return closest
 end
 
-local function RequestControlIfNetworked()
+local function RequestControlIfNetworked(entity)
     if NetworkGetEntityIsNetworked(entity) then
         NetworkRequestControlOfEntity(entity)
     end
@@ -253,7 +253,7 @@ end
 
 local function FreezeTelescope(entity)
 	if not IsEntityPositionFrozen(entity) then
-		RequestControlIfNetworked()
+		RequestControlIfNetworked(entity)
 		FreezeEntityPosition(entity, true)
 		frozen = true
 	end
@@ -261,7 +261,7 @@ end
 
 local function UnfreezeTelescope(entity)
 	if frozen then
-        RequestControlIfNetworked()
+        RequestControlIfNetworked(entity)
 		FreezeEntityPosition(entity, false)
 		frozen = false
 	end
