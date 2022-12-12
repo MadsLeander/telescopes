@@ -31,7 +31,7 @@ end
 local function DisplayHelpText(msg)
 	BeginTextCommandDisplayHelp("STRING")
 	AddTextComponentSubstringPlayerName(msg)
-	EndTextCommandDisplayHelp(0, 0, 1, -1)
+	EndTextCommandDisplayHelp(0, false, true, -1)
 end
 
 local function SetupInstructions()
@@ -114,7 +114,7 @@ local function CreateTelescopeCamera(entity, data)
     ScaleformMovieMethodAddParamBool(false) --isAsian
     EndScaleformMovieMethod()
 
-    RenderScriptCams(camera, 0, 0, false, false)
+    RenderScriptCams(true, false, 0, false, false)
 end
 
 local function HideHudThisFrame()
@@ -374,8 +374,8 @@ local function UseTelescope(entity)
     end
     Citizen.Wait(150)
 
-    RenderScriptCams(cam, 0, false, 0, false, false)
-    DestroyCam(cam, 0)
+    RenderScriptCams(false, false, 0, false, false)
+    DestroyCam(camera, false)
 
     ClearExtraTimecycleModifier()
     SetScaleformMovieAsNoLongerNeeded(scaleform)
