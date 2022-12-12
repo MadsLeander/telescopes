@@ -39,7 +39,7 @@ local function SetupInstructions()
     while not HasScaleformMovieLoaded(instScaleform) do
         Citizen.Wait(10)
     end
-    
+
     DrawScaleformMovieFullscreen(instScaleform, 255, 255, 255, 0, 0)
     
     PushScaleformMovieFunction(instScaleform, "CLEAR_ALL")
@@ -88,7 +88,7 @@ local function CreateTelescopeCamera(entity, data)
     local coords = GetOffsetFromEntityInWorldCoords(entity, data.cameraOffset)
     local rotation = GetEntityRotation(entity, 5).z
     if data.headingOffset then
-        rotation = rotation + data.headingOffset 
+        rotation = rotation + data.headingOffset
         if rotation > 360.0 then rotation = rotation - 360.0 end
     end
 
@@ -143,31 +143,31 @@ local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
 			enum.handle = nil
 		end
 	}
-	
+
 	return coroutine.wrap(function()
 		local iter, id = initFunc()
 		if not id or id == 0 then
 			disposeFunc(iter)
 			return
 		end
-		
+
 		local enum = {handle = iter, destructor = disposeFunc}
 		setmetatable(enum, entityEnumerator)
-		
+
 		local next = true
 		repeat
 			coroutine.yield(id)
 			next, id = moveFunc(iter)
 		until not next
-		
+
 		enum.destructor, enum.handle = nil, nil
 		disposeFunc(iter)
 	end)
 end
 
 local function IsPedPlayingAnyTelescopeAnim(ped)
-    for animType, animations in pairs(Config.Animations) do 
-        for type, animation in pairs(animations) do 
+    for animType, animations in pairs(Config.Animations) do
+        for type, animation in pairs(animations) do
             if type ~= "enterTime" and IsEntityPlayingAnim(ped, "mini@telescope", animation, 3) then
                 return true
             end
@@ -241,7 +241,7 @@ local function GetClosestTelescope()
             end
         end
     end
-   
+
     return closest
 end
 
@@ -280,7 +280,7 @@ local function UseTelescope(entity)
     end
 
     local heading = GetEntityHeading(entity)
-    if data.headingOffset then 
+    if data.headingOffset then
         heading = heading + data.headingOffset
         if heading > 360.0 then heading = heading - 360.0 end
     end
@@ -289,7 +289,7 @@ local function UseTelescope(entity)
 
     while true do
         Citizen.Wait(250)
-        local taskStatus = GetScriptTaskStatus(playerPed, "SCRIPT_TASK_GO_STRAIGHT_TO_COORD") 
+        local taskStatus = GetScriptTaskStatus(playerPed, "SCRIPT_TASK_GO_STRAIGHT_TO_COORD")
         if taskStatus == 0 or taskStatus == 7 then
             break
         end
