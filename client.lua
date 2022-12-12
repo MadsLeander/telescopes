@@ -83,24 +83,6 @@ local function GetDifference(num1, num2)
 	end
 end
 
-local function RotationToHeading(rotation)
-    local heading = rotation
-    if heading < 0 then 
-        heading = heading*-1 
-        heading = heading + GetDifference(heading, 180.0)*2
-    end
-    return heading
-end
-
-local function HeadingToRotation(heading)
-    local rotation = heading
-    if rotation > 180.0 then
-        rotation = 180.0 - GetDifference(rotation, 180.0)
-        rotation = rotation*-1 
-    end
-    return rotation
-end
-
 local function CreateTelescopeCamera(entity, data)
     camera = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
     local coords = GetOffsetFromEntityInWorldCoords(entity, data.cameraOffset)
