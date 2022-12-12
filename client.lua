@@ -41,31 +41,31 @@ local function SetupInstructions()
     end
 
     DrawScaleformMovieFullscreen(instScaleform, 255, 255, 255, 0, 0)
-    
-    PushScaleformMovieFunction(instScaleform, "CLEAR_ALL")
-    PopScaleformMovieFunctionVoid()
 
-    PushScaleformMovieFunction(instScaleform, "SET_CLEAR_SPACE")
-    PushScaleformMovieFunctionParameterInt(200)
-    PopScaleformMovieFunctionVoid()
+    BeginScaleformMovieMethod(instScaleform, "CLEAR_ALL")
+    EndScaleformMovieMethod()
 
-    PushScaleformMovieFunction(instScaleform, "SET_DATA_SLOT")
-    PushScaleformMovieFunctionParameterInt(0)
+    BeginScaleformMovieMethod(instScaleform, "SET_CLEAR_SPACE")
+    ScaleformMovieMethodAddParamInt(200)
+    EndScaleformMovieMethod()
+
+    BeginScaleformMovieMethod(instScaleform, "SET_DATA_SLOT")
+    ScaleformMovieMethodAddParamInt(0)
     ScaleformMovieMethodAddParamPlayerNameString("~INPUT_PICKUP~")
     BeginTextCommandScaleformString("STRING")
 	AddTextComponentSubstringPlayerName(Config.Localization.Exit)
-	EndTextCommandScaleformString(0, 0, 1, -1)
-    PopScaleformMovieFunctionVoid()
+	EndTextCommandScaleformString()
+    EndScaleformMovieMethod()
 
-    PushScaleformMovieFunction(instScaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
-    PopScaleformMovieFunctionVoid()
+    BeginScaleformMovieMethod(instScaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
+    EndScaleformMovieMethod()
 
-    PushScaleformMovieFunction(instScaleform, "SET_BACKGROUND_COLOUR")
-    PushScaleformMovieFunctionParameterInt(0)
-    PushScaleformMovieFunctionParameterInt(0)
-    PushScaleformMovieFunctionParameterInt(0)
-    PushScaleformMovieFunctionParameterInt(80)
-    PopScaleformMovieFunctionVoid()
+    BeginScaleformMovieMethod(instScaleform, "SET_BACKGROUND_COLOUR")
+    ScaleformMovieMethodAddParamInt(0)
+    ScaleformMovieMethodAddParamInt(0)
+    ScaleformMovieMethodAddParamInt(0)
+    ScaleformMovieMethodAddParamInt(80)
+    EndScaleformMovieMethod()
 end
 
 local function LoadAnimDict(dict)
