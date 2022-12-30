@@ -75,14 +75,6 @@ local function LoadAnimDict(dict)
 	end
 end
 
-local function GetDifference(num1, num2)
-	if num1 > num2 then
-		return num1 - num2
-	else
-		return num2 - num1
-	end
-end
-
 local function CreateTelescopeCamera(entity, data)
     camera = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
     local coords = GetOffsetFromEntityInWorldCoords(entity, data.cameraOffset)
@@ -296,7 +288,7 @@ local function UseTelescope(entity)
     end
 
     ClearPedTasks(playerPed)
-    local difference = GetDifference(heading, GetEntityHeading(playerPed))
+    local difference = math.abs(heading - GetEntityHeading(playerPed))
     if difference > 10.0 then
         SetEntityHeading(playerPed, heading)
     end
