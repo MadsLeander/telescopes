@@ -156,9 +156,9 @@ local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
 end
 
 local function IsPedPlayingAnyTelescopeAnim(ped)
-    for animType, animations in pairs(Config.Animations) do
-        for type, animation in pairs(animations) do
-            if type ~= "enterTime" and IsEntityPlayingAnim(ped, "mini@telescope", animation, 3) then
+    for _animType, animations in pairs(Config.Animations) do
+        for _key, animation in pairs(animations) do
+            if type(animation) == "string" and IsEntityPlayingAnim(ped, "mini@telescope", animation, 3) then
                 return true
             end
         end
