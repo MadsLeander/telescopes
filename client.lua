@@ -116,39 +116,6 @@ local function CreateTelescopeCamera(entity, data)
 end
 
 local function HideHudThisFrame()
-
--- EnumerateEntities made by IllidanS4
--- https://gist.github.com/IllidanS4/9865ed17f60576425369fc1da70259b2
-local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
-	local entityEnumerator = {
-		__gc = function(enum)
-			if enum.destructor and enum.handle then
-				enum.destructor(enum.handle)
-			end
-			enum.destructor = nil
-			enum.handle = nil
-		end
-	}
-
-	return coroutine.wrap(function()
-		local iter, id = initFunc()
-		if not id or id == 0 then
-			disposeFunc(iter)
-			return
-		end
-
-		local enum = {handle = iter, destructor = disposeFunc}
-		setmetatable(enum, entityEnumerator)
-
-		local next = true
-		repeat
-			coroutine.yield(id)
-			next, id = moveFunc(iter)
-		until not next
-
-		enum.destructor, enum.handle = nil, nil
-		disposeFunc(iter)
-	end)
     HideHudAndRadarThisFrame()
     for id, _state in pairs(hudComponentsToHide) do
         HideHudComponentThisFrame(id)
@@ -167,14 +134,16 @@ local function IsPedPlayingAnyTelescopeAnim(ped)
 end
 
 local function IsTelescopeAvailable(coords)
-	local playerPed = PlayerPedId()
-    for ped in EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed) do
-        if #(GetEntityCoords(ped)-coords) < 1.0 and ped ~= playerPed then
+    local playerPed = PlayerPedId()
+    local pedPool = GetGamePool('CPed')
+    for _index, ped in pairs(pedPool) do
+        if #(GetEntityCoords(ped) - coords) < 1.0 and ped ~= playerPed then
             if IsPedPlayingAnyTelescopeAnim(ped) then
-			    return false
+                return false
             end
         end
-	end
+    end
+
     return true
 end
 
@@ -216,23 +185,30 @@ local function HandleMovementInput()
 end
 
 local function GetClosestTelescope()
-    local closest = 0
-    local closestDist = Config.MaxDetectionDist
-    local coords = GetEntityCoords(PlayerPedId())
-
-    for model, data in pairs(Config.Models) do
-        local entity = GetClosestObjectOfType(coords.x, coords.y, coords.z, Config.MaxDetectionDist, model, false, false, false)
-        if entity ~= 0 then
-            local entityCoords = GetEntityCoords(entity)
-            local dist = #(coords-entityCoords)
-            if dist < closestDist then
-                closest = entity
-                closestDist = dist
-            end
+    local objectPool = GetGamePool('CObject')
+    local telescopes = {}
+    for _index, entity in pairs(objectPool) do
+        local model = GetEntityModel(entity)
+        if Config.Models[model] then
+            telescopes[entity] = true
         end
     end
 
-    return closest
+    local playerPed = PlayerPedId()
+    local playerCoords = GetEntityCoords(playerPed)
+    local closest = 0
+    local distance = 1000
+
+    for entity, _boolean in pairs(telescopes) do
+        local coords = GetEntityCoords(entity)
+        local dist = #(playerCoords - coords)
+        if dist < distance then
+            closest = entity
+            distance = dist
+        end
+    end
+
+    return closest, distance
 end
 
 local function RequestControlIfNetworked(entity)
@@ -415,43 +391,51 @@ end
 
 -- Help Text Thread --
 if Config.UseDistanceThread then
-    Citizen.CreateThread(function()
-        while true do
-            local sleep = 500
-            local coords = GetEntityCoords(PlayerPedId())
-            local closest = 0
-            local distance = 1000
+    local telescopes = {}
 
+    CreateThread(function()
+        while true do
+            local objectPool = GetGamePool('CObject')
+            for _index, entity in pairs(objectPool) do
+                local model = GetEntityModel(entity)
+                if Config.Models[model] then
+                    telescopes[entity] = true
+                end
+            end
+
+            Wait(1000)
+        end
+    end)
+
+    CreateThread(function()
+        while true do
             if not inTelescope then
-                for index, data in pairs(Config.Telescopes) do
-                    local dist = #(data.coords-coords)
+                local playerPed = PlayerPedId()
+                local playerCoords = GetEntityCoords(playerPed)
+                local closest = 0
+                local distance = 250
+
+                for entity, _boolean in pairs(telescopes) do
+                    local coords = GetEntityCoords(entity)
+                    local dist = #(playerCoords - coords)
                     if dist < distance then
-                        closest = index
+                        closest = entity
                         distance = dist
                     end
                 end
 
-                if closest ~= 0 then
-                    if distance < Config.MaxInteractionDist then
-                        sleep = 0
-                        DisplayHelpText(Config.Localization.HelpText)
-                        if IsControlJustPressed(0, 38) then
-                            local telescope = GetClosestTelescope()
-                            if telescope ~= 0 then
-                                UseTelescope(telescope)
-                            else
-                                DisplayNotification(Config.Localization.NonFound)
-                            end
-                        end
-                    else
-                        sleep = distance*20
+                if closest ~= 0 and distance < Config.MaxInteractionDist then
+                    DisplayHelpText(Config.Localization.HelpText)
+                    if IsControlJustPressed(0, 38) then
+                        UseTelescope(closest)
                     end
+                    Wait(0)
+                else
+                    Wait(distance*20)
                 end
             else
-                sleep = 500
+                Wait(500)
             end
-
-            Citizen.Wait(sleep)
         end
     end)
 end
@@ -459,8 +443,8 @@ end
 
 -- Commands --
 RegisterCommand("telescope", function(source, args, rawCommand)
-    local telescope = GetClosestTelescope()
-    if telescope ~= 0 then
+    local telescope, distance = GetClosestTelescope()
+    if telescope ~= 0 and distance < Config.MaxInteractionDist then
         UseTelescope(telescope)
     else
         DisplayNotification(Config.Localization.NonFound)
