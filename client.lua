@@ -71,7 +71,7 @@ end
 
 local function CreateTelescopeCamera(entity, data)
     camera = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
-    local coords = GetOffsetFromEntityInWorldCoords(entity, data.cameraOffset)
+    local coords = GetOffsetFromEntityInWorldCoords(entity, data.cameraOffset.x, data.cameraOffset.y, data.cameraOffset.z)
     local rotation = GetEntityRotation(entity, 5).z
     if data.headingOffset then
         rotation = rotation + data.headingOffset
@@ -256,7 +256,7 @@ end
 local function UseTelescope(entity)
     local playerPed = PlayerPedId()
     local data = Config.Models[GetEntityModel(entity)]
-    local offsetCoords = GetOffsetFromEntityInWorldCoords(entity, data.offset)
+    local offsetCoords = GetOffsetFromEntityInWorldCoords(entity, data.offset.x, data.offset.y, data.offset.z)
     local animation = Config.Animations[data.animation]
     inTelescope = true
 
@@ -271,7 +271,7 @@ local function UseTelescope(entity)
         if heading > 360.0 then heading = heading - 360.0 end
     end
 
-    TaskGoStraightToCoord(playerPed, offsetCoords, 1, 8000, heading, 0.05)
+    TaskGoStraightToCoord(playerPed, offsetCoords.x, offsetCoords.y, offsetCoords.z, 1, 8000, heading, 0.05)
 
     while true do
         Wait(250)
@@ -289,7 +289,7 @@ local function UseTelescope(entity)
 
     local dist = #(GetEntityCoords(playerPed)-offsetCoords)
     if dist > 0.425 and dist < 2.0 then
-        SetEntityCoords(playerPed, vector3(offsetCoords.x, offsetCoords.y, offsetCoords.z-1.0))
+        SetEntityCoords(playerPed, offsetCoords.x, offsetCoords.y, offsetCoords.z-1.0)
     elseif dist > 2.0 then
         DisplayNotification(Config.Localization.ToFarAway)
         ClearPedTasks(playerPed)
