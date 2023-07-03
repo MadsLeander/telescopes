@@ -13,6 +13,18 @@ local relativeOffset = 0.0
 local maxVertical = 20.0
 local maxHorizontal = 55.0
 
+local hudComponentsToHide = {
+    [1] = true, -- Wanted Stars
+    [2] = true, -- Weapon icon
+    [3] = true, -- Cash
+    [4] = true, -- MP CASH
+    [13] = true, -- Cash Change
+    [11] = true, -- Floating Help Text
+    [12] = true, -- More floating help text
+    [15] = true, -- Subtitle Text
+    [18] = true, -- Game Stream
+    [19] = true -- Weapon Wheel
+}
 
 -- Functions --
 local function DisplayNotification(msg)
@@ -104,18 +116,6 @@ local function CreateTelescopeCamera(entity, data)
 end
 
 local function HideHudThisFrame()
-	HideHudAndRadarThisFrame()
-	HideHudComponentThisFrame(1) -- Wanted Stars
-	HideHudComponentThisFrame(2) -- Weapon icon
-	HideHudComponentThisFrame(3) -- Cash
-	HideHudComponentThisFrame(4) -- MP CASH
-	HideHudComponentThisFrame(13) -- Cash Change
-	HideHudComponentThisFrame(11) -- Floating Help Text
-	HideHudComponentThisFrame(12) -- More floating help text
-	HideHudComponentThisFrame(15) -- Subtitle Text
-	HideHudComponentThisFrame(18) -- Game Stream
-	HideHudComponentThisFrame(19) -- Weapon Wheel
-end
 
 -- EnumerateEntities made by IllidanS4
 -- https://gist.github.com/IllidanS4/9865ed17f60576425369fc1da70259b2
@@ -149,6 +149,10 @@ local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
 		enum.destructor, enum.handle = nil, nil
 		disposeFunc(iter)
 	end)
+    HideHudAndRadarThisFrame()
+    for id, _state in pairs(hudComponentsToHide) do
+        HideHudComponentThisFrame(id)
+    end
 end
 
 local function IsPedPlayingAnyTelescopeAnim(ped)
