@@ -23,9 +23,9 @@ local function DisplayNotification(msg)
 end
 
 local function DisplayHelpText(msg)
-	BeginTextCommandDisplayHelp("STRING")
-	AddTextComponentSubstringPlayerName(msg)
-	EndTextCommandDisplayHelp(0, false, true, -1)
+    BeginTextCommandDisplayHelp("STRING")
+    AddTextComponentSubstringPlayerName(msg)
+    EndTextCommandDisplayHelp(0, false, true, -1)
 end
 
 local function SetupInstructions()
@@ -47,8 +47,8 @@ local function SetupInstructions()
     ScaleformMovieMethodAddParamInt(0)
     ScaleformMovieMethodAddParamPlayerNameString("~INPUT_PICKUP~")
     BeginTextCommandScaleformString("STRING")
-	AddTextComponentSubstringPlayerName(Config.Localization.Exit)
-	EndTextCommandScaleformString()
+    AddTextComponentSubstringPlayerName(Config.Localization.Exit)
+    EndTextCommandScaleformString()
     EndScaleformMovieMethod()
 
     BeginScaleformMovieMethod(instScaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
@@ -63,10 +63,10 @@ local function SetupInstructions()
 end
 
 local function LoadAnimDict(dict)
-	RequestAnimDict(dict)
-	while not HasAnimDictLoaded(dict) do
-	end
+    RequestAnimDict(dict)
+    while not HasAnimDictLoaded(dict) do
         Wait(10)
+    end
 end
 
 local function CreateTelescopeCamera(entity, data)
@@ -175,7 +175,7 @@ local function IsTelescopeAvailable(coords)
 end
 
 local function HandleZoom()
-	if GetDisabledControlNormal(0, 32) ~= 0.0 or GetDisabledControlNormal(0, 335) ~= 0.0 then -- Zoom in
+    if GetDisabledControlNormal(0, 32) ~= 0.0 or GetDisabledControlNormal(0, 335) ~= 0.0 then -- Zoom in
         fov = math.max(fov - Config.Zoom.Speed, Config.Zoom.Min)
     end
     if GetDisabledControlNormal(0, 33) ~= 0.0 or GetDisabledControlNormal(0, 336) ~= 0.0 then -- Zoom out
@@ -190,9 +190,9 @@ end
 
 local function HandleMovementInput()
     local axisX = GetDisabledControlNormal(0, 220)
-	local axisY = GetDisabledControlNormal(0, 221)
+    local axisY = GetDisabledControlNormal(0, 221)
 
-	if axisX ~= 0.0 or axisY ~= 0.0 then
+    if axisX ~= 0.0 or axisY ~= 0.0 then
         local zoomValue = (1.0/(Config.Zoom.Max-Config.Zoom.Min))*(fov-Config.Zoom.Min)
         local rotation = GetCamRot(camera, 2)
 
@@ -207,8 +207,8 @@ local function HandleMovementInput()
         local newX = math.max(math.min(maxVertical, rotation.x + axisY*-1.0*(movementSpeed)*(zoomValue+0.1)), maxVertical*-1)
         local newZ = telescopeHeading + relativeOffset
 
-		SetCamRot(camera, newX, 0.0, newZ, 2)
-	end
+        SetCamRot(camera, newX, 0.0, newZ, 2)
+    end
 end
 
 local function GetClosestTelescope()
@@ -238,19 +238,19 @@ local function RequestControlIfNetworked(entity)
 end
 
 local function FreezeTelescope(entity)
-	if not IsEntityPositionFrozen(entity) then
-		RequestControlIfNetworked(entity)
-		FreezeEntityPosition(entity, true)
-		frozen = true
-	end
+    if not IsEntityPositionFrozen(entity) then
+        RequestControlIfNetworked(entity)
+        FreezeEntityPosition(entity, true)
+        frozen = true
+    end
 end
 
 local function UnfreezeTelescope(entity)
-	if frozen then
+    if frozen then
         RequestControlIfNetworked(entity)
-		FreezeEntityPosition(entity, false)
-		frozen = false
-	end
+        FreezeEntityPosition(entity, false)
+        frozen = false
+    end
 end
 
 local function UseTelescope(entity)
@@ -274,7 +274,7 @@ local function UseTelescope(entity)
     TaskGoStraightToCoord(playerPed, offsetCoords, 1, 8000, heading, 0.05)
 
     while true do
-        Citizen.Wait(250)
+        Wait(250)
         local taskStatus = GetScriptTaskStatus(playerPed, "SCRIPT_TASK_GO_STRAIGHT_TO_COORD")
         if taskStatus == 0 or taskStatus == 7 then
             break
