@@ -4,13 +4,13 @@ I decided to release this to the public since I haven’t seen any other telesco
 
 
 # Optional Dependencies
-As previously stated the script allows for either qTarget or qb-target to be used. They are disabled by default but can be toggled in the config file.
-The script also uses mythic notify to send notifications to the player, however, this can be changed. Native notifications are built-in if you would like to use those instead. This can be toggled in the config file.
+As previously stated the script allows for qTarget, qb-target pr ox_target to be used. They are disabled by default but can be toggled in the config file.
+You can add your own notification exports/events inside the DisplayNotification function in client.lua (at the top).
 
 
 # Optimization
 The script runs at 0.1ms when idling if you have the help text thread (gets the distance to the telescope and displays some help text if close enough). It idles at 0.0 if you only use the command/3rd eye.
-It runs at 0.4- 0.5ms when using a telescope.
+It runs at 0.4 - 0.5ms when using a telescope.
 
 
 # Known Issues
