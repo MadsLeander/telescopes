@@ -13,19 +13,13 @@ local relativeOffset = 0.0
 local maxVertical = 20.0
 local maxHorizontal = 55.0
 
--- Functions --
-local function DisplayNativeNotification(msg)
-	BeginTextCommandThefeedPost("STRING")
-	AddTextComponentSubstringPlayerName(msg)
-	EndTextCommandThefeedPostTicker(false, false)
-end
 
+-- Functions --
 local function DisplayNotification(msg)
-	if Config.UseNativeNotifiactions then
-		DisplayNativeNotification(msg)
-	else
-		exports.mythic_notify:SendAlert('error', msg)
-	end
+    -- Remove the functions below and add your own notifications here
+    BeginTextCommandThefeedPost("STRING")
+    AddTextComponentSubstringPlayerName(msg)
+    EndTextCommandThefeedPostTicker(false, false)
 end
 
 local function DisplayHelpText(msg)

@@ -23,8 +23,6 @@ Config.Localization = {
 
 -- Other
 Config.UseDistanceThread = true
-Config.UseNativeNotifiactions = false -- will use custom (mythic notify by default) notifications if set to false
-
 Config.MaxInteractionDist = 1.5
 Config.MaxDetectionDist = 6.0
 
