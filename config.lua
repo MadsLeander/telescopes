@@ -24,8 +24,7 @@ Config.Localization = {
 
 -- Other
 Config.UseDistanceThread = true
-Config.MaxInteractionDist = 1.5
-Config.MaxDetectionDist = 6.0
+Config.MaxInteractionDist = 1.75
 
 Config.MovementSpeed = {
 	Keyboard = 2.75,
