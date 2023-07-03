@@ -368,24 +368,35 @@ end
 -- Targeting --
 if Config.Target then
     local models = {}
-    local index = 0
-    for model, data in pairs(Config.Models) do
-        index = index + 1
-        models[index] = model
+    for model, _data in pairs(Config.Models) do
+        models[#models+1] = model
     end
 
-    exports[Config.Target]:AddTargetModel(models, {
-        options = {
+    if Config.Target == "ox_target" then
+        exports.ox_target:addModel(models, {
             {
                 icon = Config.Targeting.Icon,
                 label = Config.Targeting.Label,
-                action = function(entity)
-                    UseTelescope(entity)
+                distance = Config.MaxInteractionDist,
+                onSelect = function(data)
+                    UseTelescope(data.entity)
                 end
+            }
+        })
+    else
+        exports[Config.Target]:AddTargetModel(models, {
+            options = {
+                {
+                    icon = Config.Targeting.Icon,
+                    label = Config.Targeting.Label,
+                    action = function(entity)
+                        UseTelescope(entity)
+                    end
+                }
             },
-        },
-        distance = Config.MaxInteractionDist
-    })
+            distance = Config.MaxInteractionDist
+        })
+    end
 end
 
 
