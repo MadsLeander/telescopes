@@ -31,7 +31,7 @@ end
 local function SetupInstructions()
     instScaleform = RequestScaleformMovie("instructional_buttons")
     while not HasScaleformMovieLoaded(instScaleform) do
-        Citizen.Wait(10)
+        Wait(10)
     end
 
     DrawScaleformMovieFullscreen(instScaleform, 255, 255, 255, 0, 0)
@@ -65,8 +65,8 @@ end
 local function LoadAnimDict(dict)
 	RequestAnimDict(dict)
 	while not HasAnimDictLoaded(dict) do
-		Citizen.Wait(10)
 	end
+        Wait(10)
 end
 
 local function CreateTelescopeCamera(entity, data)
@@ -85,7 +85,7 @@ local function CreateTelescopeCamera(entity, data)
 
     scaleform = RequestScaleformMovie(data.scaleform)
     while not HasScaleformMovieLoaded(scaleform) do
-        Citizen.Wait(10)
+        Wait(10)
     end
     local xRes, yRes = GetActiveScreenResolution()
     BeginScaleformMovieMethod(scaleform, "SET_DISPLAY_CONFIG")
@@ -303,14 +303,14 @@ local function UseTelescope(entity)
     gameplayCamera.heading = GetGameplayCamRelativeHeading()
     gameplayCamera.pitch = GetGameplayCamRelativePitch()
 
-    Citizen.Wait(animation.enterTime)
+    Wait(animation.enterTime)
     DoScreenFadeOut(500)
-    Citizen.Wait(600)
+    Wait(600)
 
     TaskPlayAnim(playerPed, "mini@telescope", animation.idle, 2.0, 2.0, -1, 1, 0, false, false, false)
     CreateTelescopeCamera(entity, data)
     SetupInstructions()
-    Citizen.CreateThread(function()
+    CreateThread(function()
         DoScreenFadeIn(500)
     end)
 
@@ -350,15 +350,15 @@ local function UseTelescope(entity)
         HideHudThisFrame()
 
         tick = tick + 1
-        Citizen.Wait(0)
+        Wait(0)
     end
 
     DoScreenFadeOut(500)
     while not IsScreenFadedOut() do
         DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255, 0)
-        Citizen.Wait(0)
+        Wait(0)
     end
-    Citizen.Wait(150)
+    Wait(150)
 
     RenderScriptCams(false, false, 0, false, false)
     DestroyCam(camera, false)
@@ -371,11 +371,11 @@ local function UseTelescope(entity)
     SetGameplayCamRelativePitch(gameplayCamera.pitch, 1.0)
 
     DoScreenFadeIn(500)
-    Citizen.Wait(500)
+    Wait(500)
 
     if doAnim then
         TaskPlayAnim(playerPed, "mini@telescope", animation.exit, 2.0, 1.0, -1, 0, 0, false, false, false)
-        Citizen.Wait(1500)
+        Wait(1500)
     else
         ClearPedTasks(playerPed)
     end
