@@ -43,7 +43,7 @@ end
 local function SetupInstructions()
     instScaleform = RequestScaleformMovie("instructional_buttons")
     while not HasScaleformMovieLoaded(instScaleform) do
-        Wait(10)
+        Wait(0)
     end
 
     DrawScaleformMovieFullscreen(instScaleform, 255, 255, 255, 0, 0)
@@ -77,7 +77,7 @@ end
 local function LoadAnimDict(dict)
     RequestAnimDict(dict)
     while not HasAnimDictLoaded(dict) do
-        Wait(10)
+        Wait(0)
     end
 end
 
@@ -97,7 +97,7 @@ local function CreateTelescopeCamera(entity, data)
 
     scaleform = RequestScaleformMovie(data.scaleform)
     while not HasScaleformMovieLoaded(scaleform) do
-        Wait(10)
+        Wait(0)
     end
     local xRes, yRes = GetActiveScreenResolution()
     BeginScaleformMovieMethod(scaleform, "SET_DISPLAY_CONFIG")
