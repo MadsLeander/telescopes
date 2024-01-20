@@ -238,16 +238,14 @@ local function UnfreezeTelescope(entity)
 end
 
 local function UseTelescope(entity)
-    local playerPed = PlayerPedId()
     local data = Config.Models[GetEntityModel(entity)]
     local offsetCoords = GetOffsetFromEntityInWorldCoords(entity, data.offset.x, data.offset.y, data.offset.z)
-    local animation = Config.Animations[data.animation]
-    inTelescope = true
-
     if not IsTelescopeAvailable(offsetCoords) then
         DisplayNotification(Config.Localization.TelescopeInUse)
         return
     end
+
+    inTelescope = true
 
     local heading = GetEntityHeading(entity)
     if data.headingOffset then
@@ -255,6 +253,7 @@ local function UseTelescope(entity)
         if heading > 360.0 then heading = heading - 360.0 end
     end
 
+    local playerPed = PlayerPedId()
     TaskGoStraightToCoord(playerPed, offsetCoords.x, offsetCoords.y, offsetCoords.z, 1, 8000, heading, 0.05)
 
     while true do
@@ -277,11 +276,14 @@ local function UseTelescope(entity)
     elseif dist > 2.0 then
         DisplayNotification(Config.Localization.ToFarAway)
         ClearPedTasks(playerPed)
+        inTelescope = true
         return
     end
 
     FreezeTelescope(entity)
     LoadAnimDict("mini@telescope")
+
+    local animation = Config.Animations[data.animation]
     TaskPlayAnim(playerPed, "mini@telescope", animation.enter, 2.0, 2.0, -1, 2, 0, false, false, false)
 
     gameplayCamera.heading = GetGameplayCamRelativeHeading()
