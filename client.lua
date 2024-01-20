@@ -4,9 +4,9 @@ local gameplayCamera = {}
 local telescopeHeading = 0.0
 local frozen = false
 
-local camera = nil
-local scaleform = nil
-local instScaleform = nil
+local camera = 0
+local scaleform = 0
+local instScaleform = 0
 
 local fov = Config.Zoom.Max
 local relativeOffset = 0.0
