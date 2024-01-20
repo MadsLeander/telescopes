@@ -9,17 +9,17 @@ Config.Target = false
 
 -- Targeting
 Config.Targeting = {
-	Icon = "fas fa-binoculars",
-	Label = "Use Telescope"
+    Icon = "fas fa-binoculars",
+    Label = "Use Telescope"
 }
 
 -- Localization
 Config.Localization = {
-	HelpText = "Press ~INPUT_PICKUP~ to look through the telescope",
-	NonFound = "No telescope was found!",
-	TelescopeInUse = "Someone else is already using the telescope!",
-	ToFarAway = "You went to far away!",
-	Exit = "Exit Telescope"
+    HelpText = "Press ~INPUT_PICKUP~ to look through the telescope",
+    NonFound = "No telescope was found!",
+    TelescopeInUse = "Someone else is already using the telescope!",
+    ToFarAway = "You went to far away!",
+    Exit = "Exit Telescope"
 }
 
 -- Other
@@ -27,35 +27,35 @@ Config.UseDistanceThread = true
 Config.MaxInteractionDist = 1.75
 
 Config.MovementSpeed = {
-	Keyboard = 2.75,
-	Controller = 1.0
+    Keyboard = 2.75,
+    Controller = 1.0
 }
 
 Config.Zoom = {
-	Max = 50.0,
-	Min = 5.0,
-	Speed = 5.0
+    Max = 50.0,
+    Min = 5.0,
+    Speed = 5.0
 }
 
 Config.Animations = {
-	["default"] = {
-		enter = "enter_front",
-		enterTime = 1500,
-		exit = "exit_front",
-		idle = "idle"
-	},
-	["public"] = {
-		enter = "public_enter_front",
-		enterTime = 1500,
-		exit = "public_exit_front",
-		idle = "public_idle"
-	},
-	["upright"] = {
-		enter = "upright_enter_front",
-		enterTime = 2500,
-		exit = "upright_exit_front",
-		idle = "upright_idle"
-	}
+    ["default"] = {
+        enter = "enter_front",
+        enterTime = 1500,
+        exit = "exit_front",
+        idle = "idle"
+    },
+    ["public"] = {
+        enter = "public_enter_front",
+        enterTime = 1500,
+        exit = "public_exit_front",
+        idle = "public_idle"
+    },
+    ["upright"] = {
+        enter = "upright_enter_front",
+        enterTime = 2500,
+        exit = "upright_exit_front",
+        idle = "upright_idle"
+    }
 }
 
 Config.Models = {
