@@ -99,6 +99,7 @@ local function CreateTelescopeCamera(entity, data)
     while not HasScaleformMovieLoaded(scaleform) do
         Wait(0)
     end
+
     local xRes, yRes = GetActiveScreenResolution()
     BeginScaleformMovieMethod(scaleform, "SET_DISPLAY_CONFIG")
     ScaleformMovieMethodAddParamInt(xRes)
@@ -151,13 +152,16 @@ local function HandleZoom()
     if GetDisabledControlNormal(0, 32) ~= 0.0 or GetDisabledControlNormal(0, 335) ~= 0.0 then -- Zoom in
         fov = math.max(fov - Config.Zoom.Speed, Config.Zoom.Min)
     end
+
     if GetDisabledControlNormal(0, 33) ~= 0.0 or GetDisabledControlNormal(0, 336) ~= 0.0 then -- Zoom out
         fov = math.min(fov + Config.Zoom.Speed, Config.Zoom.Max)
     end
+
     local current_fov = GetCamFov(camera)
     if math.abs(fov-current_fov) < 0.1 then
         fov = current_fov
     end
+
     SetCamFov(camera, current_fov + (fov - current_fov)*0.05)
 end
 
@@ -290,12 +294,14 @@ local function UseTelescope(entity)
     TaskPlayAnim(playerPed, "mini@telescope", animation.idle, 2.0, 2.0, -1, 1, 0, false, false, false)
     CreateTelescopeCamera(entity, data)
     SetupInstructions()
+
     CreateThread(function()
         DoScreenFadeIn(500)
     end)
 
     local tick = 0
     local doAnim = true
+
     fov = Config.Zoom.Max
     maxVertical = data.MaxVertical
     maxHorizontal = data.MaxHorizontal
@@ -359,6 +365,7 @@ local function UseTelescope(entity)
     else
         ClearPedTasks(playerPed)
     end
+
     inTelescope = false
     UnfreezeTelescope(entity)
     RemoveAnimDict("mini@telescope")
