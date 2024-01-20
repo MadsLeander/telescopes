@@ -59,8 +59,8 @@ Config.Animations = {
 }
 
 Config.Models = {
-	[1186047406] = { MaxHorizontal = 55.0, MaxVertical = 20.0, offset = vector3(-0.03, 0.96, 0.0), headingOffset = 180.0, animation = "public", cameraOffset = vector3(0.0, -0.5, 0.7), scaleform = "OBSERVATORY_SCOPE" }, -- prop_telescope_01 (Public)
-	[844159446] = { MaxHorizontal = 55.0, MaxVertical = 20.0, offset = vector3(0.02, -0.78, 1.0), animation = "upright", cameraOffset = vector3(0.0, 0.2, 1.7), scaleform = "BINOCULARS" }, -- prop_telescope (Mount Chilliad)
-	[-656927072] = { MaxHorizontal = 55.0, MaxVertical = 35.0, offset = vector3(1.14, 0.0, 0.0), headingOffset = 90.0, animation = "default", cameraOffset = vector3(-0.25, 0.0, 1.3), scaleform = "OBSERVATORY_SCOPE" }, -- prop_t_telescope_01b (Domestic)
-	[1930051531] = { MaxHorizontal = 55.0, MaxVertical = 20.0, offset = vector3(-0.03, 0.96, 0.0), headingOffset = 180.0, animation = "public", cameraOffset = vector3(0.0, -0.5, 0.7), scaleform = "BINOCULARS" }, -- xs_prop_arena_telescope_01
+    [`prop_telescope_01`] = { MaxHorizontal = 55.0, MaxVertical = 20.0, offset = vector3(-0.03, 0.96, 0.0), headingOffset = 180.0, animation = "public", cameraOffset = vector3(0.0, -0.5, 0.7), scaleform = "OBSERVATORY_SCOPE" }, -- Public
+    [`prop_telescope`] = { MaxHorizontal = 55.0, MaxVertical = 20.0, offset = vector3(0.02, -0.78, 1.0), animation = "upright", cameraOffset = vector3(0.0, 0.2, 1.7), scaleform = "BINOCULARS" }, -- Mount Chilliad
+    [`prop_t_telescope_01b`] = { MaxHorizontal = 55.0, MaxVertical = 35.0, offset = vector3(1.14, 0.0, 0.0), headingOffset = 90.0, animation = "default", cameraOffset = vector3(-0.25, 0.0, 1.3), scaleform = "OBSERVATORY_SCOPE" }, -- Domestic
+    [`xs_prop_arena_telescope_01`] = { MaxHorizontal = 55.0, MaxVertical = 20.0, offset = vector3(-0.03, 0.96, 0.0), headingOffset = 180.0, animation = "public", cameraOffset = vector3(0.0, -0.5, 0.7), scaleform = "BINOCULARS" }, -- Arena
 }
