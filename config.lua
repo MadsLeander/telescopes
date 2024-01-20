@@ -18,6 +18,7 @@ Config.Localization = {
     HelpText = "Press ~INPUT_PICKUP~ to look through the telescope",
     NonFound = "No telescope was found!",
     TelescopeInUse = "Someone else is already using the telescope!",
+    TelescopeTooTilted = "This telescope is too tilted to be used!",
     ToFarAway = "You went to far away!",
     Exit = "Exit Telescope"
 }
@@ -25,6 +26,8 @@ Config.Localization = {
 -- Other
 Config.UseDistanceThread = true
 Config.MaxInteractionDist = 1.75
+
+Config.MaxTilt = 20.0
 
 Config.MovementSpeed = {
     Keyboard = 2.75,

@@ -237,7 +237,23 @@ local function UnfreezeTelescope(entity)
     end
 end
 
+local function GetEntityTilt(entity)
+    local rot = GetEntityRotation(entity)
+    local xRot = rot.x
+    local yRot = rot.y
+
+    if xRot < 0.0 then xRot = xRot*-1 end
+    if yRot < 0.0 then yRot = yRot*-1 end
+
+    return xRot + yRot
+end
+
 local function UseTelescope(entity)
+    if GetEntityTilt(entity) > Config.MaxTilt then
+        DisplayNotification(Config.Localization.TelescopeTooTilted)
+        return
+    end
+
     local data = Config.Models[GetEntityModel(entity)]
     local offsetCoords = GetOffsetFromEntityInWorldCoords(entity, data.offset.x, data.offset.y, data.offset.z)
     if not IsTelescopeAvailable(offsetCoords) then
