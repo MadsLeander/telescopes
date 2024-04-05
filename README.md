@@ -1,5 +1,5 @@
 # Telescopes
-Telescopes is a free standalone script that allows players to use telescopes all around the map. Currently, it allows the player to use /telescope, press E when close to one or to use either qTarget or qb-target as a 3rd eye solution.
+Telescopes is a free standalone script that allows players to use telescopes all around the map. Currently, it allows the player to use /telescope, press E when close to one or to use either qTarget, qb-target or ox_target as a 3rd eye solution.
 I decided to release this to the public since I haven’t seen any other telescope scripts around. The script was made for fun, so the code might not be the greatest, feel free to improve upon it.
 
 
